@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portkeeper</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main>
+    <header>
+      <div><p class="eyebrow">LOCAL PORT MANAGER</p><h1>Portkeeper</h1><p>See what is listening, keep ports assigned to projects, and find the next free one.</p></div>
+      <button id="refresh">Refresh ports</button>
+    </header>
+    <div id="message" role="status" aria-live="polite"></div>
+    <section class="cards" aria-label="Overview">
+      <article><span>Project ports</span><strong id="assigned-count">—</strong></article>
+      <article><span>Project ports in use</span><strong id="project-active-count">—</strong></article>
+      <article><span>Other active ports</span><strong id="other-count">—</strong></article>
+    </section>
+    <section class="panel suggest">
+      <div><h2>Find an available port</h2><p>Checks active listeners, saved assignments, and whether Windows will allow a bind now.</p></div>
+      <form id="suggest-form"><label>From <input id="start" type="number" min="1" max="65535" value="3000" required></label><label>To <input id="end" type="number" min="1" max="65535" value="3999" required></label><button type="submit">Suggest port</button></form>
+      <output id="suggestion"></output>
+    </section>
+    <section class="panel">
+      <div class="section-heading"><div><h2>My project ports</h2><p>Only ports you assign to projects appear here. They stay listed when the application stops.</p></div></div>
+      <form id="assignment-form" class="assignment-form">
+        <label>Port <input id="port" type="number" min="1" max="65535" required placeholder="3000"></label>
+        <label>Project <input id="project" maxlength="100" required placeholder="My frontend"></label>
+        <label>Project folder <input id="folder" maxlength="1024" placeholder="C:\Projects\my-app"></label>
+        <label>Note <input id="note" maxlength="500" placeholder="Optional"></label>
+        <button type="submit">Save assignment</button>
+      </form>
+      <div class="table-wrap"><table><thead><tr><th>Port</th><th>Project / folder</th><th>Application using it</th><th>Status</th><th></th></tr></thead><tbody id="assignment-body"></tbody></table></div>
+    </section>
+    <section class="panel">
+      <div class="section-heading"><div><h2>Other active ports</h2><p>System services and ports you have not assigned to a project.</p></div><input id="filter" type="search" placeholder="Filter by port or application" aria-label="Filter other active ports"></div>
+      <div class="table-wrap"><table><thead><tr><th>Port</th><th>Protocol / address</th><th>Application</th><th>Detected folder</th><th></th></tr></thead><tbody id="active-body"></tbody></table></div>
+    </section>
+    <footer id="data-path"></footer>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>
